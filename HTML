@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Dígito Verificador RUT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative; 
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; 
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .gif {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            z-index: 1;
+        }
+    </style>
+    <script>
+        function calcularDigitoVerificador() {
+            var rutSinDigito = document.getElementById("rut").value;
+            var multiplicadores = [2, 3, 4, 5, 6, 7];
+            var rutInvertido = rutSinDigito.split('').reverse();
+            var suma = 0;
+            var indiceMultiplicador = 0;
+
+            for (var i = 0; i < rutInvertido.length; i++) {
+                suma += parseInt(rutInvertido[i]) * multiplicadores[indiceMultiplicador];
+                indiceMultiplicador = (indiceMultiplicador + 1) % multiplicadores.length;
+            }
+
+            var resto = suma % 11;
+            var digitoVerificador = resto > 1 ? 11 - resto : 0;
+
+            document.getElementById("resultado").innerText = "El dígito verificador es: " + digitoVerificador;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3E5b2MxNXMzeXlzdHVmOG5yaHZ5bWZqZmZyc2t4a29rdzJkYTZ6MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hnUTdW4C2VdCVzugu9/giphy.gif" class="gif">
+        <h1>Calculadora de Dígito Verificador RUT</h1>
+        <label for="rut">Ingrese el RUT sin puntos y sin dígito verificador:</label>
+        <input type="text" id="rut">
+        <button onclick="calcularDigitoVerificador()">Calcular Dígito Verificador</button>
+        <p id="resultado"></p>
+    </div>
+</body>
+</html>
