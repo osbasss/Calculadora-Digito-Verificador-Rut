@@ -1,0 +1,38 @@
+import tkinter as tk
+
+def calcular_digito_verificador():
+    rut_sin_digito = entrada_rut.get()
+    multiplicadores = [2, 3, 4, 5, 6, 7]
+    rut_invertido = rut_sin_digito[::-1]
+    suma = 0
+    indice_multiplicador = 0
+
+    for digito in rut_invertido:
+        suma += int(digito) * multiplicadores[indice_multiplicador]
+        indice_multiplicador = (indice_multiplicador + 1) % len(multiplicadores)
+
+    resto = suma % 11
+    digito_verificador = 11 - resto if resto > 1 else 0
+
+    resultado.set(f"El dígito verificador es: {digito_verificador}")
+
+
+ventana = tk.Tk()
+ventana.title("Calculadora de Dígito Verificador RUT")
+
+
+etiqueta_rut = tk.Label(ventana, text="Ingrese el RUT sin dígito verificador:")
+etiqueta_rut.pack()
+
+entrada_rut = tk.Entry(ventana)
+entrada_rut.pack()
+
+boton_calcular = tk.Button(ventana, text="Calcular dígito verificador", command=calcular_digito_verificador)
+boton_calcular.pack()
+
+resultado = tk.StringVar()
+etiqueta_resultado = tk.Label(ventana, textvariable=resultado)
+etiqueta_resultado.pack()
+
+
+ventana.mainloop()
